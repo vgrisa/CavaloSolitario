@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
+﻿using System.Diagnostics;
 
-public class Tabuleiro
+public class Tabuleiro(int linhas, int colunas)
 {
-    public int Linhas { get; }
-    public int Colunas { get; }
-    public int[,] OrdemPassos { get; }
-
-    public Tabuleiro(int linhas, int colunas)
-    {
-        Linhas = linhas;
-        Colunas = colunas;
-        OrdemPassos = new int[linhas, colunas];
-    }
+    public int Linhas { get; } = linhas;
+    public int Colunas { get; } = colunas;
+    public int[,] OrdemPassos { get; } = new int[linhas, colunas];
 
     public void Exibir(int cavaloLinha, int cavaloColuna)
     {
@@ -42,28 +32,30 @@ public class Tabuleiro
 
 public static class MovimentoCavalo
 {
-    public static readonly int[] DeltaLinha = { 2, 1, -1, -2, -2, -1, 1, 2 };
-    public static readonly int[] DeltaColuna = { 1, 2, 2, 1, -1, -2, -2, -1 };
+    public static readonly int[] DeltaLinha = [2, 1, -1, -2, -2, -1, 1, 2];
+    public static readonly int[] DeltaColuna = [1, 2, 2, 1, -1, -2, -2, -1];
 }
 
 internal class Program
 {
-    private const int TamanhoTabuleiro = 8;
+    private static int _tamanhoTabuleiro = 8;
 
     private static void Main()
     {
         Console.WriteLine("Bem-vindo ao Passeio do Cavalo!");
-        Console.Write($"Digite o número da linha inicial (0 a {TamanhoTabuleiro - 1}): ");
+        Console.Write("Digite o tamanho do tabuleiro: ");
+        _tamanhoTabuleiro = Convert.ToInt32(Console.ReadLine());
+        Console.Write($"Digite o número da linha inicial (0 a {_tamanhoTabuleiro - 1}): ");
         int linhaInicial = Convert.ToInt32(Console.ReadLine());
-        Console.Write($"Digite o número da coluna inicial (0 a {TamanhoTabuleiro - 1}): ");
+        Console.Write($"Digite o número da coluna inicial (0 a {_tamanhoTabuleiro - 1}): ");
         int colunaInicial = Convert.ToInt32(Console.ReadLine());
 
-        Tabuleiro tabuleiro = new Tabuleiro(TamanhoTabuleiro, TamanhoTabuleiro);
+        Tabuleiro tabuleiro = new Tabuleiro(_tamanhoTabuleiro, _tamanhoTabuleiro);
 
-        bool modoCalculo = TamanhoTabuleiro > 10;
+        bool modoCalculo = _tamanhoTabuleiro > 10;
 
         var cronometro = Stopwatch.StartNew();
-        List<(int, int)> caminho = EncontrarCaminho(tabuleiro, linhaInicial, colunaInicial);
+        List<(int, int)>? caminho = EncontrarCaminho(tabuleiro, linhaInicial, colunaInicial);
 
         if (caminho != null)
         {
@@ -114,7 +106,7 @@ internal class Program
         tabuleiro.Exibir(-1, -1);
     }
 
-    private static List<(int, int)> EncontrarCaminho(Tabuleiro tabuleiro, int linhaInicial, int colunaInicial)
+    private static List<(int, int)>? EncontrarCaminho(Tabuleiro tabuleiro, int linhaInicial, int colunaInicial)
     {
         int[,] visitado = new int[tabuleiro.Linhas, tabuleiro.Colunas];
         List<(int, int)> caminho = new();
