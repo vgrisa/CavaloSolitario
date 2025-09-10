@@ -39,8 +39,8 @@ public class Tabuleiro
 
 public static class MovimentoCavalo
 {
-    public static readonly int[] DeltaLinha = [2, 1, -1, -2, -2, -1, 1, 2];
-    public static readonly int[] DeltaColuna = [1, 2, 2, 1, -1, -2, -2, -1];
+    public static readonly int[] DeltaLinha = {2, 1, -1, -2, -2, -1, 1, 2};
+    public static readonly int[] DeltaColuna = {1, 2, 2, 1, -1, -2, -2, -1};
 }
 
 internal class Program
