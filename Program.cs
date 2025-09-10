@@ -1,10 +1,17 @@
 ﻿using System.Diagnostics;
 
-public class Tabuleiro(int linhas, int colunas)
+public class Tabuleiro
 {
-    public int Linhas { get; } = linhas;
-    public int Colunas { get; } = colunas;
-    public int[,] OrdemPassos { get; } = new int[linhas, colunas];
+    public int Linhas { get; }
+    public int Colunas { get; }
+    public int[,] OrdemPassos { get; }
+    
+    public Tabuleiro(int linhas, int colunas)
+    {
+        Linhas = linhas;
+        Colunas = colunas;
+        OrdemPassos = new int[linhas, colunas];
+    }
 
     public void Exibir(int cavaloLinha, int cavaloColuna)
     {
